@@ -9,12 +9,15 @@ import (
 
 func main() {
 	fmt.Println("Hello world!")
+
 	ad := CreateAd("Some title", "Some Description", 0.0)
+	fmt.Println("Created Ad")
 	ad.Print()
 
 	Save(ad)
 	foundAd := FindById(ad.Id)
-	foundAd.Print()
+	fmt.Println("Saved Ad")
+	(*foundAd).Print()
 
 	id, _ := uuid.NewRandom()
 	notFoundAd := FindById(id)

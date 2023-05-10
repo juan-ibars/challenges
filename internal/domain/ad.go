@@ -7,7 +7,7 @@ import (
 )
 
 type Ad struct {
-	id          uuid.UUID
+	Id          uuid.UUID
 	title       string
 	description string
 	price       float32
@@ -21,7 +21,7 @@ func GenerateUUID() uuid.UUID {
 
 func CreateAd(title string, description string, price float32) Ad {
 	return Ad{
-		id:          GenerateUUID(),
+		Id:          GenerateUUID(),
 		title:       title,
 		description: description,
 		price:       price,
@@ -30,5 +30,5 @@ func CreateAd(title string, description string, price float32) Ad {
 }
 
 func (ad Ad) Print() {
-	fmt.Printf("ad:{\n id:%s\n title:%s\n description:%s\n price:%f\n date:%s\n}\n", ad.id.String(), ad.title, ad.description, ad.price, ad.date.String())
+	fmt.Printf("ad:{\n id:%s\n title:%s\n description:%s\n price:%f\n date:%s\n}\n", ad.Id.String(), ad.title, ad.description, ad.price, ad.date.String())
 }

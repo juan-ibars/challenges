@@ -14,8 +14,6 @@ type Ad struct {
 	date        time.Time
 }
 
-type Ads []Ad
-
 func GenerateUUID() uuid.UUID {
 	result, _ := uuid.NewRandom()
 	return result

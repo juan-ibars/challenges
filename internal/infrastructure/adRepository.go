@@ -19,7 +19,7 @@ func FindById(id UUID) *Ad {
 }
 
 func FindAllAds() []Ad {
-	var ads = make([]Ad, 0)
+	var ads []Ad
 	for index, ad := range InMemoryRepository {
 		if index < 5 {
 			ads = append(ads, ad)

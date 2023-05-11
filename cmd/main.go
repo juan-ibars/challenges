@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure"
+	"math/rand"
 )
 
 func main() {
@@ -17,11 +17,16 @@ func main() {
 	Save(ad)
 	foundAd := FindById(ad.Id)
 	fmt.Println("Saved Ad")
-	(*foundAd).Print()
+	foundAd.Print()
 
-	id, _ := uuid.NewRandom()
-	notFoundAd := FindById(id)
-	if notFoundAd == nil {
-		println("ad not found")
+	for i := 0; i < 10; i++ {
+		ad := CreateAd("Some title", "Some Description", rand.Float64())
+		InMemoryRepository = append(InMemoryRepository, ad)
+	}
+
+	foundAds := FindAllAds()
+	fmt.Println("list of Ads")
+	for _, ad := range foundAds {
+		ad.Print()
 	}
 }

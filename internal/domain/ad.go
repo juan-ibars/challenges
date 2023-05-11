@@ -10,7 +10,7 @@ type Ad struct {
 	Id          uuid.UUID
 	title       string
 	description string
-	price       float32
+	price       float64
 	date        time.Time
 }
 
@@ -19,7 +19,7 @@ func GenerateUUID() uuid.UUID {
 	return result
 }
 
-func CreateAd(title string, description string, price float32) Ad {
+func CreateAd(title string, description string, price float64) Ad {
 	return Ad{
 		Id:          GenerateUUID(),
 		title:       title,

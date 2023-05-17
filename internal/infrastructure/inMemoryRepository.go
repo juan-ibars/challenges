@@ -7,7 +7,7 @@ import (
 
 type InMemoryRepository struct{}
 
-var Ads []Ad
+var Ads = make([]Ad, 0)
 
 func (r InMemoryRepository) Save(ad Ad) {
 	Ads = append(Ads, ad)

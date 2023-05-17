@@ -23,7 +23,7 @@ func (r InMemoryRepository) FindById(id UUID) *Ad {
 }
 
 func (r InMemoryRepository) FindAllAds() []Ad {
-	ads := make([]Ad, 0)
+	ads := make([]Ad, 5)
 	for index, ad := range Ads {
 		if index < 5 {
 			ads = append(ads, ad)

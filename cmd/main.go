@@ -7,6 +7,8 @@ import (
 	"math/rand"
 )
 
+var adRepository InMemoryRepository
+
 func main() {
 	fmt.Println("Hello world!")
 
@@ -14,17 +16,17 @@ func main() {
 	fmt.Println("Created Ad")
 	ad.Print()
 
-	Save(ad)
-	foundAd := FindById(ad.Id)
+	adRepository.Save(ad)
+	foundAd := adRepository.FindById(ad.Id)
 	fmt.Println("Saved Ad")
-	foundAd.Print()
+	(*foundAd).Print()
 
 	for i := 0; i < 10; i++ {
 		ad := CreateAd("Some title", "Some Description", rand.Float64())
-		InMemoryRepository = append(InMemoryRepository, ad)
+		adRepository.Save(ad)
 	}
 
-	foundAds := FindAllAds()
+	foundAds := adRepository.FindAllAds()
 	fmt.Println("list of Ads")
 	for _, ad := range foundAds {
 		ad.Print()

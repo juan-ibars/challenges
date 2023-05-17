@@ -8,10 +8,10 @@ import (
 
 type Ad struct {
 	Id          uuid.UUID
-	title       string
-	description string
-	price       float64
-	date        time.Time
+	Title       string
+	Description string
+	Price       float64
+	Date        time.Time
 }
 
 func GenerateUUID() uuid.UUID {
@@ -22,13 +22,13 @@ func GenerateUUID() uuid.UUID {
 func CreateAd(title string, description string, price float64) Ad {
 	return Ad{
 		Id:          GenerateUUID(),
-		title:       title,
-		description: description,
-		price:       price,
-		date:        time.Now(),
+		Title:       title,
+		Description: description,
+		Price:       price,
+		Date:        time.Now(),
 	}
 }
 
 func (ad Ad) Print() {
-	fmt.Printf("ad:{\n id:%s\n title:%s\n description:%s\n price:%f\n date:%s\n}\n", ad.Id.String(), ad.title, ad.description, ad.price, ad.date.String())
+	fmt.Printf("ad:{\n id:%s\n title:%s\n description:%s\n price:%f\n date:%s\n}\n", ad.Id.String(), ad.Title, ad.Description, ad.Price, ad.Date.String())
 }

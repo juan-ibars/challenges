@@ -5,26 +5,32 @@ import (
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 )
 
-type InMemoryRepository struct{}
-
-var Ads = make([]Ad, 0)
-
-func (r InMemoryRepository) Save(ad Ad) {
-	Ads = append(Ads, ad)
+type InMemoryRepository struct {
+	ads []Ad
 }
 
-func (r InMemoryRepository) FindById(id UUID) *Ad {
-	for index, ad := range Ads {
+func NewInMemoryRepository() *InMemoryRepository {
+	return &InMemoryRepository{
+		ads: make([]Ad, 0),
+	}
+}
+
+func (r *InMemoryRepository) Save(ad Ad) {
+	r.ads = append(r.ads, ad)
+}
+
+func (r *InMemoryRepository) FindById(id UUID) *Ad {
+	for index, ad := range r.ads {
 		if ad.Id == id {
-			return &Ads[index]
+			return &r.ads[index]
 		}
 	}
 	return nil
 }
 
-func (r InMemoryRepository) FindAllAds() []Ad {
+func (r *InMemoryRepository) FindAllAds() []Ad {
 	ads := make([]Ad, 0, 5)
-	for index, ad := range Ads {
+	for index, ad := range r.ads {
 		if index < 5 {
 			ads = append(ads, ad)
 		}

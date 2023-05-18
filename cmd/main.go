@@ -8,10 +8,10 @@ import (
 	"math/rand"
 )
 
-var repository InMemoryRepository
-
 func main() {
 	fmt.Println("Hello world!")
+	// create repository instance
+	repository := NewInMemoryRepository()
 
 	// save an ad
 	saveAdService := application.NewSaveAdService(repository)
@@ -45,7 +45,7 @@ func main() {
 	findAllService := application.NewFindAllService(repository)
 	foundAds := findAllService.Execute()
 	//foundAds := repository.FindAllAds()
-	fmt.Println("list of Ads")
+	fmt.Println("list of ads")
 	for _, ad := range foundAds {
 		ad.Print()
 	}

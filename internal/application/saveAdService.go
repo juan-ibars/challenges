@@ -1,17 +1,27 @@
 package application
 
-import . "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
+import (
+	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
+)
 
 type SaveAdService struct {
-	adRepository AdRepository
+	idGenerator   IdGenerator
+	timeGenerator TimeGenerator
+	adRepository  AdRepository
 }
 
-func NewSaveAdService(adRepository AdRepository) *SaveAdService {
-	return &SaveAdService{adRepository: adRepository}
+func NewSaveAdService(idGenerator IdGenerator, timeGenerator TimeGenerator, adRepository AdRepository) *SaveAdService {
+	return &SaveAdService{idGenerator: idGenerator, timeGenerator: timeGenerator, adRepository: adRepository}
 }
 
 func (s *SaveAdService) Execute(title string, description string, price float64) Ad {
-	ad := CreateAd(title, description, price)
+	ad := Ad{
+		Id:          s.idGenerator.Generate(),
+		Title:       title,
+		Description: description,
+		Price:       price,
+		Date:        s.timeGenerator.Generate(),
+	}
 	s.adRepository.Save(ad)
 	return ad
 }

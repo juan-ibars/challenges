@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/bxcodec/faker/v3"
 	"github.mpi-internal.com/juan-ibars/learning-go/internal/application"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure"
@@ -12,9 +13,13 @@ func main() {
 	fmt.Println("Hello world!")
 	// create repository instance
 	repository := NewInMemoryRepository()
+	// create id generator instance
+	idGenerator := NewUUIDGenerator()
+	// create time generator instance
+	timeGenerator := NewDateGenerator()
 
 	// save an ad
-	saveAdService := application.NewSaveAdService(repository)
+	saveAdService := application.NewSaveAdService(idGenerator, timeGenerator, repository)
 	title := "Some title"
 	description := "Some Description"
 	price := 0.1234
@@ -38,7 +43,13 @@ func main() {
 	//(*foundAd).Print()
 
 	for i := 0; i < 10; i++ {
-		ad := CreateAd("Some title", "Some Description", rand.Float64())
+		ad := Ad{
+			Id:          idGenerator.Generate(),
+			Title:       faker.Word(),
+			Description: faker.Sentence(),
+			Price:       rand.Float64(),
+			Date:        timeGenerator.Generate(),
+		}
 		repository.Save(ad)
 	}
 

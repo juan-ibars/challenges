@@ -11,5 +11,6 @@ func NewFindAllService(adRepository AdRepository) *FindAllService {
 }
 
 func (s *FindAllService) Execute() []Ad {
-	return s.adRepository.FindAllAds()
+	ads := s.adRepository.FindAllAds()
+	return ads[:5]
 }

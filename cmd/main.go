@@ -5,7 +5,7 @@ import (
 	"github.com/bxcodec/faker/v3"
 	"github.mpi-internal.com/juan-ibars/learning-go/internal/application"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
-	. "github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure"
+	. "github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure/repository"
 	"math/rand"
 )
 

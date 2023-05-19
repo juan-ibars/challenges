@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func TestFindById(t *testing.T) {
+func TestFindByIdService(t *testing.T) {
 	repository := new(mocks.AdRepository)
 	service := NewFindByIdService(repository)
 	existingId, _ := uuid.NewRandom()

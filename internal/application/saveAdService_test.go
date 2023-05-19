@@ -33,4 +33,5 @@ func TestSaveAdService(t *testing.T) {
 	got := service.Execute(title, description, price)
 
 	assert.Equal(t, ad, got)
+	repository.AssertCalled(t, "Save", ad)
 }

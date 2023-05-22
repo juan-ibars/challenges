@@ -1,4 +1,4 @@
-package application
+package ad
 
 import (
 	"github.com/google/uuid"

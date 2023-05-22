@@ -1,4 +1,4 @@
-package application
+package ad
 
 import (
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"

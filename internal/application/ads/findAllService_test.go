@@ -1,4 +1,4 @@
-package application
+package ads
 
 import (
 	"github.com/bxcodec/faker/v3"

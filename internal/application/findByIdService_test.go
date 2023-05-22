@@ -25,10 +25,10 @@ func TestFindByIdService(t *testing.T) {
 	dataSet := []struct {
 		name  string
 		input uuid.UUID
-		want  Ad
+		want  *Ad
 	}{
-		{name: "test with some result", input: existingId, want: ad},
-		{name: "test with no result", input: noExistingId, want: Ad{}},
+		{name: "test with some result", input: existingId, want: &ad},
+		{name: "test with no result", input: noExistingId, want: nil},
 	}
 	repository.On("FindById", existingId).Return(&ad).Once()
 	repository.On("FindById", noExistingId).Return(nil).Once()

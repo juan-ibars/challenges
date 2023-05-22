@@ -13,10 +13,7 @@ func NewFindByIdService(adRepository AdRepository) *FindByIdService {
 	return &FindByIdService{adRepository: adRepository}
 }
 
-func (s *FindByIdService) Execute(id UUID) Ad {
+func (s *FindByIdService) Execute(id UUID) *Ad {
 	foundAd := s.adRepository.FindById(id)
-	if foundAd != nil {
-		return *foundAd
-	}
-	return Ad{}
+	return foundAd
 }

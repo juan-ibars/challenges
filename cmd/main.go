@@ -12,7 +12,7 @@ import (
 func main() {
 	fmt.Println("Hello world!")
 	// create repository instance
-	repository := NewInMemoryRepository()
+	repository := NewInMemoryRepository(&Ads)
 	// create id generator instance
 	idGenerator := NewUUIDGenerator()
 	// create time generator instance

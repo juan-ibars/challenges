@@ -15,10 +15,14 @@ type AdRepository struct {
 }
 
 // FindAllAds provides a mock function with given fields:
-func (_m *AdRepository) FindAllAds() []domain.Ad {
+func (_m *AdRepository) FindAllAds() ([]domain.Ad, error) {
 	ret := _m.Called()
 
 	var r0 []domain.Ad
+	var r1 error
+	if rf, ok := ret.Get(0).(func() ([]domain.Ad, error)); ok {
+		return rf()
+	}
 	if rf, ok := ret.Get(0).(func() []domain.Ad); ok {
 		r0 = rf()
 	} else {
@@ -27,14 +31,24 @@ func (_m *AdRepository) FindAllAds() []domain.Ad {
 		}
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func() error); ok {
+		r1 = rf()
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // FindById provides a mock function with given fields: id
-func (_m *AdRepository) FindById(id uuid.UUID) *domain.Ad {
+func (_m *AdRepository) FindById(id uuid.UUID) (*domain.Ad, error) {
 	ret := _m.Called(id)
 
 	var r0 *domain.Ad
+	var r1 error
+	if rf, ok := ret.Get(0).(func(uuid.UUID) (*domain.Ad, error)); ok {
+		return rf(id)
+	}
 	if rf, ok := ret.Get(0).(func(uuid.UUID) *domain.Ad); ok {
 		r0 = rf(id)
 	} else {
@@ -43,12 +57,27 @@ func (_m *AdRepository) FindById(id uuid.UUID) *domain.Ad {
 		}
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func(uuid.UUID) error); ok {
+		r1 = rf(id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // Save provides a mock function with given fields: ad
-func (_m *AdRepository) Save(ad domain.Ad) {
-	_m.Called(ad)
+func (_m *AdRepository) Save(ad domain.Ad) error {
+	ret := _m.Called(ad)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(domain.Ad) error); ok {
+		r0 = rf(ad)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
 }
 
 type mockConstructorTestingTNewAdRepository interface {

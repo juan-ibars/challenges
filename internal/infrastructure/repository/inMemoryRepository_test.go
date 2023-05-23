@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/bxcodec/faker/v3"
 	"github.com/google/uuid"
+	"github.com/stretchr/testify/assert"
 	"github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 	"math/rand"
 	"testing"
@@ -10,7 +11,7 @@ import (
 )
 
 func TestFind(t *testing.T) {
-	sut := NewInMemoryRepository()
+	ads := make([]domain.Ad, 0)
 	id, _ := uuid.NewRandom()
 	date := time.Now()
 	ad := domain.Ad{
@@ -20,17 +21,20 @@ func TestFind(t *testing.T) {
 		Price:       0.12345,
 		Date:        date,
 	}
-	sut.ads = append(sut.ads, ad)
+	ads = append(ads, ad)
+	sut := NewInMemoryRepository(&ads)
 
-	got := sut.FindById(id)
+	got, err := sut.FindById(id)
 
 	if *got != ad {
 		t.Errorf("want %v got %v", ad, *got)
 	}
+	assert.Nil(t, err)
 }
 
 func TestSave(t *testing.T) {
-	sut := NewInMemoryRepository()
+	ads := make([]domain.Ad, 0)
+	sut := NewInMemoryRepository(&ads)
 	id, _ := uuid.NewRandom()
 	date := time.Now()
 	ad := domain.Ad{
@@ -40,19 +44,20 @@ func TestSave(t *testing.T) {
 		Price:       0.12345,
 		Date:        date,
 	}
-	sut.Save(ad)
+	saveErr := sut.Save(ad)
 
-	got := sut.FindById(id)
+	got, findErr := sut.FindById(id)
 
 	if *got != ad {
 		t.Errorf("want %v got %v", ad, *got)
 	}
+	assert.Nil(t, saveErr)
+	assert.Nil(t, findErr)
 }
 
 func TestFindAll(t *testing.T) {
-	sut := NewInMemoryRepository()
-	want := 10
-	for i := 0; i < want; i++ {
+	ads := make([]domain.Ad, 0)
+	for i := 0; i < 10; i++ {
 		id, _ := uuid.NewRandom()
 		ad := domain.Ad{
 			Id:          id,
@@ -61,13 +66,26 @@ func TestFindAll(t *testing.T) {
 			Price:       rand.Float64(),
 			Date:        time.Now(),
 		}
-		sut.ads = append(sut.ads, ad)
+		ads = append(ads, ad)
 	}
+	sut := NewInMemoryRepository(&ads)
+	want := 10
 
-	foundAds := sut.FindAllAds()
+	foundAds, err := sut.FindAllAds()
 	got := len(foundAds)
 
 	if got != want {
 		t.Errorf("want %v got %v", want, got)
 	}
+	assert.Nil(t, err)
+}
+
+func TestDBError(t *testing.T) {
+	ads := make([]int, 0)
+	sut := NewInMemoryRepository(&ads)
+	id, _ := uuid.NewRandom()
+
+	_, err := sut.FindById(id)
+
+	assert.NotNil(t, err)
 }

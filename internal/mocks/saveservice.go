@@ -13,17 +13,27 @@ type SaveService struct {
 }
 
 // Execute provides a mock function with given fields: title, description, price
-func (_m *SaveService) Execute(title string, description string, price float64) domain.Ad {
+func (_m *SaveService) Execute(title string, description string, price float64) (domain.Ad, error) {
 	ret := _m.Called(title, description, price)
 
 	var r0 domain.Ad
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string, string, float64) (domain.Ad, error)); ok {
+		return rf(title, description, price)
+	}
 	if rf, ok := ret.Get(0).(func(string, string, float64) domain.Ad); ok {
 		r0 = rf(title, description, price)
 	} else {
 		r0 = ret.Get(0).(domain.Ad)
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func(string, string, float64) error); ok {
+		r1 = rf(title, description, price)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewSaveService interface {

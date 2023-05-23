@@ -1,6 +1,7 @@
 package ad
 
 import (
+	"errors"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 )
 
@@ -14,7 +15,10 @@ func NewSaveAdService(idGenerator IdGenerator, timeGenerator TimeGenerator, adRe
 	return &SaveAdService{idGenerator: idGenerator, timeGenerator: timeGenerator, adRepository: adRepository}
 }
 
-func (s *SaveAdService) Execute(title string, description string, price float64) Ad {
+func (s *SaveAdService) Execute(title string, description string, price float64) (Ad, error) {
+	if len(description) > 50 {
+		return Ad{}, errors.New("description field could not be longer than 50")
+	}
 	ad := Ad{
 		Id:          s.idGenerator.Generate(),
 		Title:       title,
@@ -23,5 +27,5 @@ func (s *SaveAdService) Execute(title string, description string, price float64)
 		Date:        s.timeGenerator.Generate(),
 	}
 	s.adRepository.Save(ad)
-	return ad
+	return ad, nil
 }

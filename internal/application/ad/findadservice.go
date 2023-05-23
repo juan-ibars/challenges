@@ -7,5 +7,5 @@ import (
 
 //go:generate mockery --name=FindAdService --filename=findservice.go --output=../../mocks --outpkg=mocks
 type FindAdService interface {
-	Execute(id UUID) *Ad
+	Execute(id UUID) (Ad, error)
 }

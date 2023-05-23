@@ -15,19 +15,27 @@ type FindAdService struct {
 }
 
 // Execute provides a mock function with given fields: id
-func (_m *FindAdService) Execute(id uuid.UUID) *domain.Ad {
+func (_m *FindAdService) Execute(id uuid.UUID) (domain.Ad, error) {
 	ret := _m.Called(id)
 
-	var r0 *domain.Ad
-	if rf, ok := ret.Get(0).(func(uuid.UUID) *domain.Ad); ok {
+	var r0 domain.Ad
+	var r1 error
+	if rf, ok := ret.Get(0).(func(uuid.UUID) (domain.Ad, error)); ok {
+		return rf(id)
+	}
+	if rf, ok := ret.Get(0).(func(uuid.UUID) domain.Ad); ok {
 		r0 = rf(id)
 	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*domain.Ad)
-		}
+		r0 = ret.Get(0).(domain.Ad)
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func(uuid.UUID) error); ok {
+		r1 = rf(id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewFindAdService interface {

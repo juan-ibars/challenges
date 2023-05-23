@@ -30,8 +30,24 @@ func TestSaveAdService(t *testing.T) {
 	idGenerator.On("Generate").Return(id)
 	timeGenerator.On("Generate").Return(date)
 
-	got := service.Execute(title, description, price)
+	got, err := service.Execute(title, description, price)
 
 	assert.Equal(t, ad, got)
+	assert.Equal(t, err, nil)
 	repository.AssertCalled(t, "Save", ad)
+}
+
+func TestSaveAdServiceWhenDescriptionLongerThanFiftyChars(t *testing.T) {
+	repository := new(mocks.AdRepository)
+	idGenerator := new(mocks.IdGenerator)
+	timeGenerator := new(mocks.TimeGenerator)
+	service := NewSaveAdService(idGenerator, timeGenerator, repository)
+	title := "Some title"
+	description := "123456789012345678901234567890123456789012345678901234567890"
+	price := 1.2345
+
+	ad, err := service.Execute(title, description, price)
+
+	assert.NotEqual(t, nil, err)
+	assert.Equal(t, Ad{}, ad)
 }

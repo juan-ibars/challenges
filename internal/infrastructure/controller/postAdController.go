@@ -23,11 +23,15 @@ func (c *PostAdController) handler() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		var request PostAdControllerBodyRequest
 		_ = ctx.BindJSON(&request)
-		ad := c.service.Execute(request.Title, request.Description, c.getPrice(request.Price))
-		response := PostAdControllerBodyResponse{
-			Id: ad.Id.String(),
+		ad, err := c.service.Execute(request.Title, request.Description, c.getPrice(request.Price))
+		if err != nil {
+			ctx.JSONP(400, nil)
+		} else {
+			response := PostAdControllerBodyResponse{
+				Id: ad.Id.String(),
+			}
+			ctx.JSONP(201, response)
 		}
-		ctx.JSONP(201, response)
 	}
 }
 

@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	. "github.com/google/uuid"
+	"github.mpi-internal.com/juan-ibars/learning-go/internal/application"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 )
 
@@ -38,8 +39,13 @@ func (r *InMemoryRepository) FindById(id UUID) (*Ad, error) {
 				return &(*ads)[index], nil
 			}
 		}
+	} else {
+		return nil, &InfrastructureErrors{Msg: "DB error"}
 	}
-	return nil, &InfrastructureErrors{Msg: "DB error"}
+	return nil, &application.AdErrors{
+		Msg: "Ad not found",
+		Id:  id,
+	}
 }
 
 func (r *InMemoryRepository) FindAllAds() ([]Ad, error) {

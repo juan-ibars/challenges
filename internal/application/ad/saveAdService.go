@@ -26,6 +26,6 @@ func (s *SaveAdService) Execute(title string, description string, price float64)
 		Price:       price,
 		Date:        s.timeGenerator.Generate(),
 	}
-	s.adRepository.Save(ad)
+	_ = s.adRepository.Save(ad)
 	return ad, nil
 }

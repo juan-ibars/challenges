@@ -22,7 +22,10 @@ func (c *PostAdController) SetUpRouter(router *gin.Engine) *gin.Engine {
 func (c *PostAdController) handler() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		var request PostAdControllerBodyRequest
-		_ = ctx.BindJSON(&request)
+		e := ctx.BindJSON(&request)
+		if e != nil {
+			return
+		}
 		ad, err := c.service.Execute(request.Title, request.Description, c.getPrice(request.Price))
 		if err != nil {
 			ctx.JSONP(400, nil)

@@ -8,7 +8,7 @@ func NewDateGenerator() *DateGenerator {
 	return &DateGenerator{}
 }
 
-func (d *DateGenerator) Generate() time.Time {
-	t, _ := time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+func (d *DateGenerator) Generate() Time {
+	t, _ := Parse(RFC3339, Now().Format(RFC3339))
 	return t
 }

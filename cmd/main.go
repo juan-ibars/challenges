@@ -6,7 +6,7 @@ import (
 	"github.mpi-internal.com/juan-ibars/learning-go/internal/application/ad"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
 	"github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure/controller"
-	. "github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure/repository"
+	. "github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure/repository/inmemory"
 )
 
 func main() {

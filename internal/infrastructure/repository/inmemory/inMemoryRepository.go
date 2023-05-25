@@ -1,10 +1,11 @@
-package repository
+package inmemory
 
 import (
 	"fmt"
 	. "github.com/google/uuid"
 	"github.mpi-internal.com/juan-ibars/learning-go/internal/application"
 	. "github.mpi-internal.com/juan-ibars/learning-go/internal/domain"
+	"github.mpi-internal.com/juan-ibars/learning-go/internal/infrastructure/repository"
 )
 
 var Ads = make([]Ad, 0)
@@ -25,7 +26,7 @@ func (r *InMemoryRepository) Save(ad Ad) error {
 		*ads = append(*ads, ad)
 		return nil
 	} else {
-		return &InfrastructureErrors{
+		return &repository.InfrastructureErrors{
 			Msg: fmt.Sprintf("DB error"),
 		}
 	}
@@ -40,7 +41,7 @@ func (r *InMemoryRepository) FindById(id UUID) (*Ad, error) {
 			}
 		}
 	} else {
-		return nil, &InfrastructureErrors{Msg: "DB error"}
+		return nil, &repository.InfrastructureErrors{Msg: "DB error"}
 	}
 	return nil, &application.AdErrors{
 		Msg: "Ad not found",
@@ -53,6 +54,6 @@ func (r *InMemoryRepository) FindAllAds() ([]Ad, error) {
 	if ok {
 		return *ads, nil
 	} else {
-		return make([]Ad, 0), &InfrastructureErrors{Msg: "DB error"}
+		return make([]Ad, 0), &repository.InfrastructureErrors{Msg: "DB error"}
 	}
 }

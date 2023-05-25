@@ -9,5 +9,6 @@ func NewDateGenerator() *DateGenerator {
 }
 
 func (d *DateGenerator) Generate() Time {
-	return Now()
+	time, _ := Parse(RFC3339, Now().Format(RFC3339))
+	return time
 }
